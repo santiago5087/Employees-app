@@ -1,0 +1,14 @@
+$primary-color-lighter: #3f51b5cc;
+
+.main-container {
+  min-height: 100%;
+}
+
+.footer {
+  bottom: 0;
+  color: rgba(255, 255, 255, 0.747);
+  position: relative;
+  width: 100%;
+  background-color: $primary-color-lighter;
+  height: 110px;
+}
