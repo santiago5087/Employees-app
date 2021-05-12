@@ -16,13 +16,15 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { EmpCreateComponent } from './components/emp-create/emp-create.component';
+import { EmpComponent } from './components/emp/emp.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    EmpCreateComponent
+    EmpCreateComponent,
+    EmpComponent
   ],
   imports: [
     BrowserModule,
