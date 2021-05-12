@@ -11,22 +11,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // Components
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { EmpComponent } from './components/emp/emp.component';
+import { EmpFormComponent } from './components/emp-form/emp-form.component';
 
 // Angular Material modules
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { EmpCreateComponent } from './components/emp-create/emp-create.component';
-import { EmpComponent } from './components/emp/emp.component';
-import { EmpEditComponent } from './components/emp-edit/emp-edit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    EmpCreateComponent,
     EmpComponent,
-    EmpEditComponent
+    EmpFormComponent
   ],
   imports: [
     BrowserModule,
