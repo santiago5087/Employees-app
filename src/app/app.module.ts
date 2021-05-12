@@ -5,8 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // App modules
-import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -17,7 +18,7 @@ import { EmpFormComponent } from './components/emp-form/emp-form.component';
 // Angular Material modules
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
@@ -30,9 +31,11 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
-    FlexLayoutModule
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

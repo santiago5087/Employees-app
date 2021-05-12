@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-employees-112c2": {
+      "hosting": {
+        "employees-app": [
+          "angular-employees-112c2"
+        ]
+      }
+    }
+  }
+}

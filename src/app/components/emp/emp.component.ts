@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { Employee } from '../../models/Employee';
 
 @Component({
   selector: 'app-emp',
@@ -7,7 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmpComponent implements OnInit {
 
-  constructor() { }
+  constructor(//private empService: EmpleadosService,
+              private fb: FormBuilder) { }
+
+  // Formulario
+  buscarEmpForm: FormGroup;
+
+  // Datos para graficar la tabla
+  empleados = new MatTableDataSource<Employee>([]);
+  displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
 
   ngOnInit(): void {
   }
