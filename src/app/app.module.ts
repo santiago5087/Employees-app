@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { EmpCreateComponent } from './components/emp-create/emp-create.component';
 import { EmpComponent } from './components/emp/emp.component';
+import { EmpEditComponent } from './components/emp-edit/emp-edit.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EmpComponent } from './components/emp/emp.component';
     AppComponent,
     NavigationComponent,
     EmpCreateComponent,
-    EmpComponent
+    EmpComponent,
+    EmpEditComponent
   ],
   imports: [
     BrowserModule,
