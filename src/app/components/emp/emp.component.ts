@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router'
 
 import { Employee } from '../../models/Employee';
 import { EmployeesService } from '../../services/employees.service';
@@ -21,7 +22,8 @@ export class EmpComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
 
   constructor(private empService: EmployeesService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loadEmployeesData();
@@ -40,15 +42,33 @@ export class EmpComponent implements OnInit, OnDestroy {
         let years = new Date(Date.now() - Date.parse(emp.birthDay)).getFullYear() - 1970;
         
         return {
-          "username": emp.username,
-          "nombre": emp.name,
-          "cargo": emp.position,
-          "edad": years,
-          "fechaContratacion": emp.hiringDay
+          id: emp.id,
+          username: emp.username,
+          nombre: emp.name,
+          cargo: emp.position,
+          edad: years,
+          fechaContratacion: emp.hiringDay
         }
       });
       console.log(this.employeesTable.data);
     });
+  }
+
+  onSubmitCreate(): void {
+    this.router.navigate(['employees']);
+  }
+
+  onSubmitView(id: string): void {
+    this.router.navigate(['employees', { id, edit: false }]);
+  }
+
+  onSubmitUpdate(id: string): void {
+    console.log(id)
+    this.router.navigate(['employees', { id, edit: true }]);
+  }
+
+  onSubmitDelete(id: string): void {
+    this.empService.deleteEmployee(id);
   }
 
 }

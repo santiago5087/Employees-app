@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // App modules
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
@@ -38,6 +39,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFirestoreModule,
+    RouterModule,
     AngularFireModule.initializeApp(environment.firebase),
     FlexLayoutModule,
     ReactiveFormsModule,

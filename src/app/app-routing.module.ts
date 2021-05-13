@@ -6,7 +6,7 @@ import { EmpFormComponent } from './components/emp-form/emp-form.component';
 
 const routes: Routes = [
   { path: 'home', component: EmpComponent },
-  { path: 'employees', component: EmpComponent },
+  { path: 'employees', component: EmpFormComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
