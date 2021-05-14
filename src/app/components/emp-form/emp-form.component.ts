@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
-import { fullAgeValidator } from '../../shared/helperFunctions';
+import { fullAgeValidator } from '../../shared/custom.validators';
 
 @Component({
   selector: 'app-emp-form',
@@ -42,7 +42,7 @@ export class EmpFormComponent implements OnInit {
   createForm(): void {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
-      birthDay: ['', Validators.required],
+      birthDay: ['', [Validators.required, fullAgeValidator]],
       country: ['', Validators.required],
       username: ['', Validators.required],
       hiringDate: ['', Validators.required],
@@ -51,14 +51,13 @@ export class EmpFormComponent implements OnInit {
       position: ['', Validators.required],
       commission: [0, [Validators.min(0), Validators.max(1)]]
     });
-
-    // this.employeeForm.setValidators(fullAgeValidator);
   }
 
   sendEmployeeForm() {
     console.log('Formulario empleado', this.employeeForm.value);
     let birthDay = moment(this.employeeForm.get('birthDay').value).format('DD/MM/YYYY');
     console.log('birthDay organizado', birthDay);
+    console.log('ERRORS', this.employeeForm.get('birthDay').errors)
   }
 
 }

@@ -21,7 +21,11 @@
         <input matInput formControlName="birthDay" [matDatepicker]="picker" type="string" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        
       </mat-form-field>
+      <div *ngIf="employeeForm.get('birthDay').errors?.fullAgeError">
+        <p>Error sapo perro</p>
+      </div>
     </div>
 
     <div fxLayoutAlign="space-between center">

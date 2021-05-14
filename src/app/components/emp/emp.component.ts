@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router'
+import * as moment from 'moment';
 
 import { Employee } from '../../models/Employee';
 import { EmployeesService } from '../../services/employees.service';
@@ -38,9 +39,10 @@ export class EmpComponent implements OnInit, OnDestroy {
       .getEmployees()
       .subscribe((emps: Employee[]) => {
       this.employeesTable.data = emps.map((emp: Employee) => {
-        console.log(emp)
-        let years = new Date(Date.now() - Date.parse(emp.birthDay)).getFullYear() - 1970;
-        
+        const birthDay = moment(emp.birthDay);
+        const dateNow = moment();
+        const years = dateNow.diff(birthDay, 'years');
+
         return {
           id: emp.id,
           username: emp.username,
