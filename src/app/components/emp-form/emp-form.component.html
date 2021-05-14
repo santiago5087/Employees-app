@@ -1,1 +1,102 @@
-<p>emp-form works!</p>
+<div class="container">
+  <h1>{{ title }}</h1>
+
+  <form [formGroup]="employeeForm" 
+        (ngSubmit)="sendEmployeeForm()"
+        #empForm="ngForm" fxLayoutAlign="space-between center">
+
+  <div fxFlex="45" class="form-p1">
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Nombre</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Ingresa tu nombre</mat-label>
+        <input matInput formControlName="name" type="string" required>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>MM/DD/AAAA</mat-label>
+        <input matInput formControlName="birthDay" [matDatepicker]="picker" type="string" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <mat-label>País</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Selecciona el país</mat-label>
+        <mat-select formControlName="country">
+          <mat-option *ngFor="let country of countries" [value]="country">
+            {{ country }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Nombre de usuario</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Ingresa el nombre de usuario</mat-label>
+        <input matInput formControlName="username" type="string" required>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Fecha de contratación</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>MM/DD/AAAA</mat-label>
+        <input matInput formControlName="hiringDate" [matDatepicker]="picker2" type="string" required>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <label>Estado</label>
+      <mat-slide-toggle formControlName="state"></mat-slide-toggle>
+    </div>
+
+    <button type="submit">Guardar</button>
+  </div>
+    
+  <div fxFlex="45" class="form-p2">
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Area</mat-label>
+      <mat-button-toggle-group formControlName="area">
+        <mat-button-toggle value="Administrativa">Administrativa</mat-button-toggle>
+        <mat-button-toggle value="Tecnología">Tecnología</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    
+    <div fxLayoutAlign="space-between center">
+      <mat-label>Cargo</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Selecciona el cargo</mat-label>
+        <mat-select formControlName="position">
+          <mat-option 
+            *ngFor="let pos of (empForm.value.area=='Administrativa' ? positionsAdm : positionsTech)" 
+            [value]="pos">
+            {{ pos }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div  *ngIf="empForm.value.area == 'Administrativa'" 
+          fxLayoutAlign="space-between center">
+      <mat-label>Comisión</mat-label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput formControlName="commission" type="number" min="0" max="100" required>
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>
+    
+  </div>
+  
+  
+  
+  </form>
+</div>

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatNativeDateModule } from '@angular/material/core'
 import { BrowserModule } from '@angular/platform-browser';
 
 // Animations
@@ -19,7 +20,13 @@ import { EmpFormComponent } from './components/emp-form/emp-form.component';
 // Angular Material modules
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -45,7 +52,14 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
