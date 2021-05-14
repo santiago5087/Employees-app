@@ -4,6 +4,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "tslib": ["/node_modules/tslib/tslib.d.ts"],
+    },
+    "types": ["selenium-webdriver", "protractor"],
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

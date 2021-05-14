@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
+
+import { fullAgeValidator } from '../../shared/helperFunctions';
 
 @Component({
   selector: 'app-emp-form',
@@ -23,6 +27,7 @@ export class EmpFormComponent implements OnInit {
     
     } else {
       console.log('CREATE');
+      console.log(moment().calendar())
     }
   }
 

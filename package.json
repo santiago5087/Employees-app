@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~11.2.13",
     "@angular/router": "~11.2.13",
     "firebase": "^7.0 || ^8.0",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
@@ -35,6 +36,8 @@
     "@angular/compiler-cli": "~11.2.13",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@types/protractor": "^4.0.0",
+    "@types/selenium-webdriver": "^3.0.17",
     "codelyzer": "^6.0.0",
     "firebase-tools": "^8.0.0",
     "fuzzy": "^0.1.3",
