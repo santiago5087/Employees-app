@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 import { fullAgeValidator } from '../../shared/custom.validators';
+import { CountriesService } from '../../services/countries.service';
 
 @Component({
   selector: 'app-emp-form',
@@ -14,12 +15,18 @@ export class EmpFormComponent implements OnInit {
 
   employeeForm: FormGroup;
   title: string = 'Nuevo empleado';
-  countries: string[] = ['Estados Unidos', 'Colombia'];
+  countries: string[] = [];
   positionsTech = ['Programador', 'Diseñador'];
   positionsAdm = ['Fundador y CEO', 'Recursos humanos'];
 
   constructor(private activatedRoute: ActivatedRoute,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private countriesServcie: CountriesService) {
+    this.countriesServcie.getAllCountries().subscribe(countries => {
+      this.countries = countries;
+      console.log(this.countries);
+    });
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -44,7 +51,7 @@ export class EmpFormComponent implements OnInit {
       name: ['', Validators.required],
       birthDay: ['', [Validators.required, fullAgeValidator]],
       country: ['', Validators.required],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
       hiringDate: ['', Validators.required],
       state: [true, Validators.required],
       area: ['Administrativa', Validators.required],

@@ -45,6 +45,9 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Ingresa el nombre de usuario</mat-label>
         <input matInput formControlName="username" type="string" required>
+        <div *ngIf="employeeForm.get('username').errors?.pattern">
+          {{ employeeForm.get('username').errors | json }}
+        </div>
       </mat-form-field>
     </div>
 
@@ -62,8 +65,8 @@
       <label>Estado</label>
       <mat-slide-toggle formControlName="state"></mat-slide-toggle>
     </div>
-
-    <button type="submit">Guardar</button>
+    
+    <button mat-flat-button color="primary" [disabled]="empForm.invalid" type="submit">Guardar</button>
   </div>
     
   <div fxFlex="45" class="form-p2">
@@ -89,10 +92,11 @@
       </mat-form-field>
     </div>
 
-    <div  *ngIf="empForm.value.area == 'Administrativa'" 
+    <div  *ngIf="empForm.value.position == 'Fundador y CEO'" 
           fxLayoutAlign="space-between center">
       <mat-label>Comisión</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field"
+      style="text-align: center !important; max-width: 70px !important;">
         <input matInput formControlName="commission" type="number" min="0" max="100" required>
         <span matSuffix>%</span>
       </mat-form-field>
