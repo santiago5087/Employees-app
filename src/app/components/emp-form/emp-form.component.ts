@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common'
 import * as moment from 'moment';
 
 import { fullAgeValidator } from '../../shared/custom.validators';
 import { CountriesService } from '../../services/countries.service';
+import { EmployeesService } from '../../services/employees.service';
+import { Employee } from 'src/app/models/Employee';
 
 @Component({
   selector: 'app-emp-form',
@@ -21,10 +24,11 @@ export class EmpFormComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
-              private countriesServcie: CountriesService) {
+              private location: Location,
+              private countriesServcie: CountriesService,
+              private empService: EmployeesService) {
     this.countriesServcie.getAllCountries().subscribe(countries => {
       this.countries = countries;
-      console.log(this.countries);
     });
   }
 
@@ -34,16 +38,23 @@ export class EmpFormComponent implements OnInit {
     console.log(params);
 
     if(params['id']) {
-      if(params['edit']) {
-        console.log('EDIT');
-      } else {
-        console.log('VIEW');
+      this.empService.getEmployee(params['id']).subscribe(empData => {
+        let emp: Employee = empData.data() as Employee;
+        
+        // Establece los valores del formalurio con los del empleado
+        this.employeeForm.setValue({
+          ...emp,
+          birthDay: new Date(moment(emp.birthDay, 'DD/MM/YYYY').format('MM/DD/YYYY')),
+          hiringDate: new Date(moment(emp.hiringDate, 'DD/MM/YYYY').format('MM/DD/YYYY'))
+        });
+      });
+
+      if(params['edit'] === 'false') {
+        Object.keys(this.employeeForm.controls).forEach(key => {
+          this.employeeForm.get(key).disable();
+        });
       }
-    
-    } else {
-      console.log('CREATE');
-      console.log(moment().calendar())
-    }
+    } 
   }
 
   createForm(): void {
@@ -56,15 +67,26 @@ export class EmpFormComponent implements OnInit {
       state: [true, Validators.required],
       area: ['Administrativa', Validators.required],
       position: ['', Validators.required],
-      commission: [0, [Validators.min(0), Validators.max(1)]]
+      commission: [0, [Validators.min(0), Validators.max(100)]]
     });
   }
 
-  sendEmployeeForm() {
-    console.log('Formulario empleado', this.employeeForm.value);
-    let birthDay = moment(this.employeeForm.get('birthDay').value).format('DD/MM/YYYY');
-    console.log('birthDay organizado', birthDay);
-    console.log('ERRORS', this.employeeForm.get('birthDay').errors)
+  sendEmployeeForm(): void {
+    let birthDayCorrected = moment(this.employeeForm.get('birthDay').value).format('DD/MM/YYYY');
+    let hiringDateCorrected = moment(this.employeeForm.get('hiringDate').value).format('DD/MM/YYYY');
+    let newEmp: Employee = {
+      ...this.employeeForm.value, 
+      birthDay: birthDayCorrected,
+      hiringDate: hiringDateCorrected
+    }
+    this.empService.createEmployee(newEmp).then(result => {
+      // Mostrar snackbar
+      console.log(result)
+    }).catch(err => console.log(err));
+  }
+
+  back(): void {
+    this.location.back();
   }
 
 }

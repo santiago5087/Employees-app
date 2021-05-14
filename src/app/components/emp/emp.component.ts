@@ -39,9 +39,11 @@ export class EmpComponent implements OnInit, OnDestroy {
       .getEmployees()
       .subscribe((emps: Employee[]) => {
       this.employeesTable.data = emps.map((emp: Employee) => {
-        const birthDay = moment(emp.birthDay);
+        const birthDay = moment(emp.birthDay, 'DD/MM/YYYY');
         const dateNow = moment();
         const years = dateNow.diff(birthDay, 'years');
+        console.log('EMP', emp)
+        console.log('AÑOS', years)
 
         return {
           id: emp.id,
@@ -49,7 +51,7 @@ export class EmpComponent implements OnInit, OnDestroy {
           nombre: emp.name,
           cargo: emp.position,
           edad: years,
-          fechaContratacion: emp.hiringDay
+          fechaContratacion: emp.hiringDate
         }
       });
       console.log(this.employeesTable.data);

@@ -26,6 +26,10 @@ export class EmployeesService {
       }));
   }
 
+  getEmployee(id: string) {
+    return this.afDB.collection('employees').doc(id).get();
+  }
+
   createEmployee(emp: Employee) {
     return this.afDB.collection('employees').add(emp);
   }

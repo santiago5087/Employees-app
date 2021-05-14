@@ -3,9 +3,9 @@ export class Employee {
   name: string;
   username: string;
   birthDay: string;
-  hiringDay: string;
+  hiringDate: string;
   state: boolean;
   area: string;
   position: string;
-  commission: number
+  commission?: number
 }
