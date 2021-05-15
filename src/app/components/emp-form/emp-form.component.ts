@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 
 import { fullAgeValidator } from '../../shared/custom.validators';
 import { CountriesService } from '../../services/countries.service';
 import { EmployeesService } from '../../services/employees.service';
-import { Employee } from 'src/app/models/Employee';
+import { Employee } from '../../models/Employee';
 
 @Component({
   selector: 'app-emp-form',
@@ -51,6 +51,29 @@ export class EmpFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.configureForm();
+  }
+
+  createForm(): void {
+    this.employeeForm = this.fb.group({
+      name: ['', Validators.required],
+      birthDay: ['', [Validators.required, fullAgeValidator]],
+      country: ['', Validators.required],
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
+      hiringDate: ['', Validators.required],
+      state: [true, Validators.required],
+      area: ['', Validators.required],
+      position: ['', Validators.required],
+      commission: [0, [Validators.min(0), Validators.max(100)]]
+    });
+  }
+
+  /*
+  Este método configura el formulario dependiendo de si es para crear,
+  editar o ver un empleado (esto se hace debido a que el formulario es 
+  casi el mismo, por ende se aprovecha esto y se usa el mismo).
+  */
+  configureForm(): void {
     const params = this.activatedRoute.snapshot.params;
     console.log(params);
     
@@ -74,31 +97,15 @@ export class EmpFormComponent implements OnInit {
             this.employeeForm.get(key).disable();
           });
         }
-  
         else if(params['edit'] === 'true') {
           this.title = "Editando: " + emp.name;
           this.editEmp = true;
         }
       });
-
     } else {
       this.title = 'Nuevo empleado';
       this.createEmp = true;
     } 
-  }
-
-  createForm(): void {
-    this.employeeForm = this.fb.group({
-      name: ['', Validators.required],
-      birthDay: ['', [Validators.required, fullAgeValidator]],
-      country: ['', Validators.required],
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
-      hiringDate: ['', Validators.required],
-      state: [true, Validators.required],
-      area: ['', Validators.required],
-      position: ['', Validators.required],
-      commission: [0, [Validators.min(0), Validators.max(100)]]
-    });
   }
 
   sendEmployeeForm(): void {

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router'
 
 import * as moment from 'moment';
 
@@ -20,9 +20,11 @@ export class EmpComponent implements OnInit, OnDestroy {
   empSubscription: Subscription;
   // Datos para graficar la tabla
   employeesTable = new MatTableDataSource([]);
-  displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
+  displayedColumns: string[] = ["Nombre (cargo)", "Edad", 
+                                "Fecha contratación", "Acciones"];
   // Objeto de config. de snack bar
   snackBarConfig = new MatSnackBarConfig()
+  // Para gestionar el sorting de la tabla
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private empService: EmployeesService,
@@ -40,7 +42,7 @@ export class EmpComponent implements OnInit, OnDestroy {
     this.empSubscription.unsubscribe();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.employeesTable.sort = this.sort;
   }
 
@@ -89,7 +91,7 @@ export class EmpComponent implements OnInit, OnDestroy {
   }
 
   // Función que filtra los datos por medio del valor ingresado por el usuario
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.employeesTable.filter = filterValue.trim().toLowerCase();
   }
