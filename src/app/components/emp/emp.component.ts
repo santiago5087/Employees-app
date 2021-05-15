@@ -51,7 +51,7 @@ export class EmpComponent implements OnInit, OnDestroy {
 
         return {
           "id": emp.id,
-          "Nombre (cargo)": `${emp.name} (${emp.position})`,
+          "Nombre (cargo)": `${emp.name} ${emp.position}`,
           "cargo": emp.position,
           "Edad": years,
           "Fecha contratación": emp.hiringDate

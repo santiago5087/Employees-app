@@ -88,8 +88,14 @@
     <div fxLayoutAlign="space-between center">
       <mat-label>Area</mat-label>
       <mat-button-toggle-group formControlName="area">
-        <mat-button-toggle value="Administrativa">Administrativa</mat-button-toggle>
-        <mat-button-toggle value="Tecnología">Tecnología</mat-button-toggle>
+        <mat-button-toggle value="Administrativa" 
+                           (click)="resetPosition()">
+          Administrativa
+        </mat-button-toggle>
+        <mat-button-toggle value="Tecnología" 
+                           (click)="resetPosition()">
+          Tecnología
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     
@@ -112,14 +118,13 @@
       <mat-label>Comisión</mat-label>
       <mat-form-field appearance="fill" class="form-field"
       style="text-align: center !important; max-width: 70px !important;">
-        <input matInput formControlName="commission" type="number" min="0" max="100">
+        <input matInput formControlName="commission" type="number" min="0" max="100"
+          required>
         <span matSuffix>%</span>
       </mat-form-field>
     </div>
     
   </div>
-  
-  
   
   </form>
 </div>

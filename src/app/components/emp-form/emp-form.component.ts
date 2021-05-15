@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common'
@@ -28,11 +28,17 @@ export class EmpFormComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
               private location: Location,
+              private elementRef: ElementRef,
               private countriesServcie: CountriesService,
               private empService: EmployeesService) {
     this.countriesServcie.getAllCountries().subscribe(countries => {
       this.countries = countries;
     });
+  }
+
+  resetPosition(): void {
+    this.employeeForm.get('position').patchValue(null);
+    this.employeeForm.get('commission').patchValue(0);
   }
 
   ngOnInit(): void {
@@ -89,8 +95,6 @@ export class EmpFormComponent implements OnInit {
       birthDay: birthDayCorrected,
       hiringDate: hiringDateCorrected
     }
-
-    if(newEmp.position !== 'Fundado y CEO') newEmp.commission = 0;
 
     if(this.editEmp) {
       newEmp['id'] = this.idEmp;
