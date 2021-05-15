@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
@@ -17,15 +16,12 @@ import { EmployeesService } from '../../services/employees.service';
 export class EmpComponent implements OnInit, OnDestroy {
 
   empSubscription: Subscription;
-  // Formulario del filtro
-  buscarEmpForm: FormGroup;
   // Datos para graficar la tabla
   employeesTable = new MatTableDataSource([]);
   displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private empService: EmployeesService,
-              private fb: FormBuilder,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -75,6 +71,12 @@ export class EmpComponent implements OnInit, OnDestroy {
 
   onSubmitDelete(id: string): void {
     this.empService.deleteEmployee(id);
+  }
+
+  // Función que filtra los datos por medio del valor ingresado por el usuario
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.employeesTable.filter = filterValue.trim().toLowerCase();
   }
 
 }

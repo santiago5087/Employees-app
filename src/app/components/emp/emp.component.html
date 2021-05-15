@@ -1,4 +1,18 @@
 <div class="container">
+  
+  <!-- Filter de la tabla -->
+  <div fxLayoutAlign="flex-start center">
+    <mat-label>Empleados</mat-label>
+    <mat-form-field appearance="standard" style="margin-left: 15px;">
+      <mat-label>Filtrar Tabla</mat-label>
+      <input matInput
+             (keyup)="applyFilter($event)" 
+             placeholder="Buscar por cualquier campo" 
+             #input>
+             <i matPrefix class="fas fa-search" style="padding-right: 5px;"></i>
+    </mat-form-field>
+  </div>
+  
   <table mat-table matSort [dataSource]="employeesTable" class="emp-table">
   
     <!-- Nombre (cargo) Column -->
@@ -45,8 +59,9 @@
   
   </table>
 
-  <button mat-flat-button color="primary" (click)="onSubmitCreate()">
+  <button mat-flat-button color="primary" (click)="onSubmitCreate()" style="margin-top: 50px;">
     <i class="fas fa-plus"></i>
     Crear nuevo empleado
   </button>
+
 </div>

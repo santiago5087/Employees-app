@@ -28,7 +28,6 @@ export class EmpFormComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
               private location: Location,
-              private elementRef: ElementRef,
               private countriesServcie: CountriesService,
               private empService: EmployeesService) {
     this.countriesServcie.getAllCountries().subscribe(countries => {
@@ -37,8 +36,10 @@ export class EmpFormComponent implements OnInit {
   }
 
   resetPosition(): void {
-    this.employeeForm.get('position').patchValue(null);
-    this.employeeForm.get('commission').patchValue(0);
+    if(this.editEmp) {
+      this.employeeForm.get('position').patchValue(null);
+      this.employeeForm.get('commission').patchValue(0);
+    }
   }
 
   ngOnInit(): void {
@@ -81,8 +82,8 @@ export class EmpFormComponent implements OnInit {
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
       hiringDate: ['', Validators.required],
       state: [true, Validators.required],
-      area: ['Administrativa', Validators.required],
-      position: ['Recursos humanos', Validators.required],
+      area: ['', Validators.required],
+      position: ['', Validators.required],
       commission: [0, [Validators.min(0), Validators.max(100)]]
     });
   }

@@ -3,7 +3,8 @@
 
   <form [formGroup]="employeeForm" 
         (ngSubmit)="sendEmployeeForm()"
-        #empForm="ngForm" fxLayoutAlign="space-between center">
+        #empForm="ngForm" 
+        fxLayoutAlign="space-between center">
 
   <div fxFlex="45" class="form-p1">
     <div fxLayoutAlign="space-between center">
@@ -18,7 +19,10 @@
       <mat-label>Fecha de nacimiento</mat-label>
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>MM/DD/AAAA</mat-label>
-        <input matInput formControlName="birthDay" [matDatepicker]="picker" type="string" required>
+        <input formControlName="birthDay"
+               matInput [matDatepicker]="picker" 
+               type="string" 
+               required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         
@@ -55,7 +59,11 @@
       <mat-label>Fecha de contratación</mat-label>
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>MM/DD/AAAA</mat-label>
-        <input matInput formControlName="hiringDate" [matDatepicker]="picker2" type="string" required>
+        <input formControlName="hiringDate" 
+               matInput 
+               [matDatepicker]="picker2" 
+               type="string" 
+               required>
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
