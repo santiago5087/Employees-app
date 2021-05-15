@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router'
+
 import * as moment from 'moment';
 
 import { Employee } from '../../models/Employee';
@@ -19,10 +21,16 @@ export class EmpComponent implements OnInit, OnDestroy {
   // Datos para graficar la tabla
   employeesTable = new MatTableDataSource([]);
   displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
+  // Objeto de config. de snack bar
+  snackBarConfig = new MatSnackBarConfig()
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private empService: EmployeesService,
-              private router: Router) { }
+              private router: Router,
+              private snackBar: MatSnackBar) {
+    // El snack bar tiene una duración de 4 seg. o hasta que el usuario lo cierre
+    this.snackBarConfig.duration = 4000;
+  }
 
   ngOnInit(): void {
     this.loadEmployeesData();
@@ -70,7 +78,14 @@ export class EmpComponent implements OnInit, OnDestroy {
   }
 
   onSubmitDelete(id: string): void {
-    this.empService.deleteEmployee(id);
+    this.empService.deleteEmployee(id).then(rs => {
+      this.snackBar.open('Empleado borrado con éxito',
+                           "Ok!", this.snackBarConfig);
+    }).catch(err => {
+      this.snackBar.open('Ha ocurrido un error con el borrado del empleado',
+                           "Ok!", this.snackBarConfig);
+        console.log(err);
+    });
   }
 
   // Función que filtra los datos por medio del valor ingresado por el usuario

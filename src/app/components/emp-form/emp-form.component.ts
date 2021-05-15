@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 
 import { fullAgeValidator } from '../../shared/custom.validators';
@@ -17,26 +18,32 @@ import { Employee } from 'src/app/models/Employee';
 export class EmpFormComponent implements OnInit {
 
   employeeForm: FormGroup;
-  title: string = 'Nuevo empleado';
+  title: string;
   countries: string[] = [];
   positionsTech = ['Programador', 'Diseñador'];
   positionsAdm = ['Fundador y CEO', 'Recursos humanos'];
-  editEmp: Boolean = false;
-  viewEmp: Boolean = true;
+  editEmp: Boolean;
+  viewEmp: Boolean;
+  createEmp: Boolean;
   idEmp: string;
+  // Objeto de config. de snack bar
+  snackBarConfig = new MatSnackBarConfig()
 
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
               private location: Location,
               private countriesServcie: CountriesService,
-              private empService: EmployeesService) {
+              private empService: EmployeesService,
+              private snackBar: MatSnackBar) {
     this.countriesServcie.getAllCountries().subscribe(countries => {
       this.countries = countries;
     });
+    // El snack bar tiene una duración de 4 seg. o hasta que el usuario lo cierre
+    this.snackBarConfig.duration = 4000;
   }
 
   resetPosition(): void {
-    if(this.editEmp) {
+    if(this.editEmp || this.createEmp) {
       this.employeeForm.get('position').patchValue(null);
       this.employeeForm.get('commission').patchValue(0);
     }
@@ -59,18 +66,24 @@ export class EmpFormComponent implements OnInit {
           birthDay: new Date(moment(emp.birthDay, 'DD/MM/YYYY').format('MM/DD/YYYY')),
           hiringDate: new Date(moment(emp.hiringDate, 'DD/MM/YYYY').format('MM/DD/YYYY'))
         });
+
+        if(params['edit'] === 'false') {
+          this.title = "Ver: " + emp.name;
+          this.viewEmp = true;
+          Object.keys(this.employeeForm.controls).forEach(key => {
+            this.employeeForm.get(key).disable();
+          });
+        }
+  
+        else if(params['edit'] === 'true') {
+          this.title = "Editando: " + emp.name;
+          this.editEmp = true;
+        }
       });
 
-      if(params['edit'] === 'false') {
-        this.viewEmp = false;
-        Object.keys(this.employeeForm.controls).forEach(key => {
-          this.employeeForm.get(key).disable();
-        });
-      }
-
-      else if(params['edit'] === 'true') {
-        this.editEmp = true;
-      }
+    } else {
+      this.title = 'Nuevo empleado';
+      this.createEmp = true;
     } 
   }
 
@@ -99,14 +112,23 @@ export class EmpFormComponent implements OnInit {
 
     if(this.editEmp) {
       newEmp['id'] = this.idEmp;
-      this.empService.updateEmployee(newEmp).then(result => {
-        console.log('Actualizado!')
-      }).catch(err => console.log(err));
-    } else {
+      this.empService.updateEmployee(newEmp).then(rs => {
+        this.snackBar.open('Empleado actualizado con éxito',
+                           "Ok!", this.snackBarConfig);
+      }).catch(err => {
+        this.snackBar.open('Ha ocurrido un error con la edición del empleado',
+                           "Ok!", this.snackBarConfig);
+        console.log(err)
+      });
+    } else if(this.editEmp) {
       this.empService.createEmployee(newEmp).then(result => {
-        // Mostrar snackbar
-        console.log('Creado!')
-      }).catch(err => console.log(err));
+        this.snackBar.open('Empleado creado con éxito',
+                           "Ok!", this.snackBarConfig);
+      }).catch(err => {
+        this.snackBar.open('Ha ocurrido un error con la creación del empleado',
+                           "Ok!", this.snackBarConfig);
+        console.log(err);
+      });
     }
   }
 

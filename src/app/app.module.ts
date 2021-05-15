@@ -29,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -63,7 +64,8 @@ import { environment } from 'src/environments/environment';
     MatSelectModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

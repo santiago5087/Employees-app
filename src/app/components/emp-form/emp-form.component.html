@@ -7,7 +7,7 @@
         fxLayoutAlign="space-between center">
 
   <div fxFlex="45" class="form-p1">
-    <div fxLayoutAlign="space-between center">
+    <div *ngIf="createEmp" fxLayoutAlign="space-between center">
       <mat-label>Nombre</mat-label>
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Ingresa tu nombre</mat-label>
@@ -24,12 +24,12 @@
                type="string" 
                required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-error *ngIf="employeeForm.get('birthDay').errors?.fullAgeError">
+          {{ employeeForm.get('birthDay').errors.fullAgeError }}
+        </mat-error>
         <mat-datepicker #picker></mat-datepicker>
-        
       </mat-form-field>
-      <div *ngIf="employeeForm.get('birthDay').errors?.fullAgeError">
-        <p>Error sapo perro</p>
-      </div>
+      
     </div>
 
     <div fxLayoutAlign="space-between center">
@@ -49,9 +49,10 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Ingresa el nombre de usuario</mat-label>
         <input matInput formControlName="username" type="string" required>
-        <div *ngIf="employeeForm.get('username').errors?.pattern">
-          {{ employeeForm.get('username').errors | json }}
-        </div>
+        <mat-error 
+          *ngIf="employeeForm.get('username').errors?.pattern">
+          El nombre de usuario no debe contener caracteres especiales
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -82,7 +83,7 @@
         <i class="fas fa-angle-left"></i>
         Atrás
       </button>
-      <button *ngIf="viewEmp"
+      <button *ngIf="createEmp || editEmp"
               mat-flat-button 
               color="primary" 
               [disabled]="empForm.invalid" 
@@ -121,8 +122,8 @@
       </mat-form-field>
     </div>
 
-    <div  *ngIf="empForm.value.position == 'Fundador y CEO'" 
-          fxLayoutAlign="space-between center">
+    <div *ngIf="empForm.value.position == 'Fundador y CEO'" 
+         fxLayoutAlign="space-between center">
       <mat-label>Comisión</mat-label>
       <mat-form-field appearance="fill" class="form-field"
       style="text-align: center !important; max-width: 70px !important;">
