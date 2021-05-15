@@ -1,4 +1,39 @@
 .container {
-  margin: 60px 120px;
+  margin: 6% 15%;;
   min-height: 100%;
+}
+
+.form-p1 {
+  min-width: 400px;
+  min-height: 390px;
+}
+
+.form-p2 {
+  min-width: 400px;
+  height: 390px;
+}
+
+.field-group {
+  margin: 15px 0 !important;
+}
+
+.form-field {
+  width: 240px;
+}
+
+.form-label {
+  width: 80px;
+}
+
+.buttonToggle {
+  width: 100%;
+}
+
+.buttons-group {
+  width: 100%;
+  margin-top: 70px;
+}
+
+.backButton {
+  margin-right: 25px;
 }

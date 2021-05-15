@@ -3,21 +3,25 @@
 
   <form [formGroup]="employeeForm" 
         (ngSubmit)="sendEmployeeForm()"
-        #empForm="ngForm" 
+        #empForm="ngForm"
+        fxLayout="row wrap"
         fxLayoutAlign="space-between center">
 
   <div fxFlex="45" class="form-p1">
-    <div *ngIf="createEmp" fxLayoutAlign="space-between center">
-      <mat-label>Nombre</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+
+    <div *ngIf="createEmp" 
+         fxLayoutAlign="space-between center" 
+         class="field-group">
+      <mat-label class="form-label">Nombre</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Ingresa tu nombre</mat-label>
         <input matInput formControlName="name" type="string" required>
       </mat-form-field>
     </div>
 
-    <div fxLayoutAlign="space-between center">
-      <mat-label>Fecha de nacimiento</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <mat-label class="form-label">Fecha de nacimiento</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>MM/DD/AAAA</mat-label>
         <input formControlName="birthDay"
                matInput [matDatepicker]="picker" 
@@ -29,12 +33,11 @@
         </mat-error>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      
     </div>
 
-    <div fxLayoutAlign="space-between center">
-      <mat-label>País</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <mat-label class="form-label">País</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Selecciona el país</mat-label>
         <mat-select formControlName="country">
           <mat-option *ngFor="let country of countries" [value]="country">
@@ -44,9 +47,9 @@
       </mat-form-field>
     </div>
 
-    <div fxLayoutAlign="space-between center">
-      <mat-label>Nombre de usuario</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <mat-label class="form-label">Nombre de usuario</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Ingresa el nombre de usuario</mat-label>
         <input matInput formControlName="username" type="string" required>
         <mat-error 
@@ -56,9 +59,9 @@
       </mat-form-field>
     </div>
 
-    <div fxLayoutAlign="space-between center">
-      <mat-label>Fecha de contratación</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <mat-label class="form-label">Fecha de contratación</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>MM/DD/AAAA</mat-label>
         <input formControlName="hiringDate" 
                matInput 
@@ -70,47 +73,35 @@
       </mat-form-field>
     </div>
 
-    <div fxLayoutAlign="space-between center">
-      <label>Estado</label>
-      <mat-slide-toggle formControlName="state"></mat-slide-toggle>
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <label class="form-label">Estado</label>
+      <mat-slide-toggle color="primary" class="form-field" formControlName="state"></mat-slide-toggle>
     </div>
-    
-    <div>
-      <button mat-flat-button 
-              (click)="back()"
-              color="accent" 
-              type="button">
-        <i class="fas fa-angle-left"></i>
-        Atrás
-      </button>
-      <button *ngIf="createEmp || editEmp"
-              mat-flat-button 
-              color="primary" 
-              [disabled]="empForm.invalid" 
-              type="submit">
-        Guardar
-      </button>
-    </div>
+
   </div>
     
   <div fxFlex="45" class="form-p2">
-    <div fxLayoutAlign="space-between center">
-      <mat-label>Area</mat-label>
-      <mat-button-toggle-group formControlName="area">
-        <mat-button-toggle value="Administrativa" 
+
+    <div fxLayoutAlign="space-between center" 
+         class="field-group">
+      <mat-label class="form-label">Area</mat-label>
+      <mat-button-toggle-group class="form-field" formControlName="area">
+        <mat-button-toggle class="buttonToggle"
+                           value="Administrativa" 
                            (click)="resetPosition()">
           Administrativa
         </mat-button-toggle>
-        <mat-button-toggle value="Tecnología" 
+        <mat-button-toggle class="buttonToggle"
+                           value="Tecnología" 
                            (click)="resetPosition()">
           Tecnología
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     
-    <div fxLayoutAlign="space-between center">
-      <mat-label>Cargo</mat-label>
-      <mat-form-field appearance="fill" class="form-field">
+    <div fxLayoutAlign="space-between center" class="field-group">
+      <mat-label class="form-label">Cargo</mat-label>
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Selecciona el cargo</mat-label>
         <mat-select formControlName="position">
           <mat-option 
@@ -123,17 +114,37 @@
     </div>
 
     <div *ngIf="empForm.value.position == 'Fundador y CEO'" 
-         fxLayoutAlign="space-between center">
-      <mat-label>Comisión</mat-label>
-      <mat-form-field appearance="fill" class="form-field"
-      style="text-align: center !important; max-width: 70px !important;">
-        <input matInput formControlName="commission" type="number" min="0" max="100"
-          required>
-        <span matSuffix>%</span>
-      </mat-form-field>
+         fxLayoutAlign="space-between center"
+         class="field-group">
+      <mat-label class="form-label">Comisión</mat-label>
+      <div class="form-field">
+        <mat-form-field appearance="outline" class="form-field"
+        style="text-align: center !important; max-width: 70px !important;">
+          <input matInput formControlName="commission" type="number" min="0" max="100"
+            required>
+          <span matSuffix>%</span>
+        </mat-form-field>
+      </div>
     </div>
     
   </div>
   
+  <div class="buttons-group">
+    <button mat-flat-button 
+            (click)="back()"
+            class="backButton"
+            type="button">
+      <i class="fas fa-angle-left"></i>
+      Atrás
+    </button>
+    <button *ngIf="createEmp || editEmp"
+            mat-flat-button 
+            color="primary" 
+            [disabled]="empForm.invalid" 
+            type="submit">
+      Guardar
+    </button>
+  </div>
+
   </form>
 </div>
