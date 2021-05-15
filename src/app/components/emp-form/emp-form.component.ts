@@ -21,6 +21,9 @@ export class EmpFormComponent implements OnInit {
   countries: string[] = [];
   positionsTech = ['Programador', 'Diseñador'];
   positionsAdm = ['Fundador y CEO', 'Recursos humanos'];
+  editEmp: Boolean = false;
+  viewEmp: Boolean = true;
+  idEmp: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
@@ -36,10 +39,12 @@ export class EmpFormComponent implements OnInit {
     this.createForm();
     const params = this.activatedRoute.snapshot.params;
     console.log(params);
-
+    
     if(params['id']) {
-      this.empService.getEmployee(params['id']).subscribe(empData => {
+      this.idEmp = params['id'];
+      this.empService.getEmployee(this.idEmp).subscribe(empData => {
         let emp: Employee = empData.data() as Employee;
+        delete emp.id;
         
         // Establece los valores del formalurio con los del empleado
         this.employeeForm.setValue({
@@ -50,9 +55,14 @@ export class EmpFormComponent implements OnInit {
       });
 
       if(params['edit'] === 'false') {
+        this.viewEmp = false;
         Object.keys(this.employeeForm.controls).forEach(key => {
           this.employeeForm.get(key).disable();
         });
+      }
+
+      else if(params['edit'] === 'true') {
+        this.editEmp = true;
       }
     } 
   }
@@ -66,7 +76,7 @@ export class EmpFormComponent implements OnInit {
       hiringDate: ['', Validators.required],
       state: [true, Validators.required],
       area: ['Administrativa', Validators.required],
-      position: ['', Validators.required],
+      position: ['Recursos humanos', Validators.required],
       commission: [0, [Validators.min(0), Validators.max(100)]]
     });
   }
@@ -79,10 +89,20 @@ export class EmpFormComponent implements OnInit {
       birthDay: birthDayCorrected,
       hiringDate: hiringDateCorrected
     }
-    this.empService.createEmployee(newEmp).then(result => {
-      // Mostrar snackbar
-      console.log(result)
-    }).catch(err => console.log(err));
+
+    if(newEmp.position !== 'Fundado y CEO') newEmp.commission = 0;
+
+    if(this.editEmp) {
+      newEmp['id'] = this.idEmp;
+      this.empService.updateEmployee(newEmp).then(result => {
+        console.log('Actualizado!')
+      }).catch(err => console.log(err));
+    } else {
+      this.empService.createEmployee(newEmp).then(result => {
+        // Mostrar snackbar
+        console.log('Creado!')
+      }).catch(err => console.log(err));
+    }
   }
 
   back(): void {

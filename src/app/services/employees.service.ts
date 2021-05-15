@@ -35,6 +35,7 @@ export class EmployeesService {
   }
 
   updateEmployee(emp: Employee) {
+    console.log('MY ID', emp.id);
     return this.afDB.collection('employees').doc(emp.id).update(emp);
   }
 

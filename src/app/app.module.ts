@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSortModule } from '@angular/material/sort';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -61,7 +62,8 @@ import { environment } from 'src/environments/environment';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

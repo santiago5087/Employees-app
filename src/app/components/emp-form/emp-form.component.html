@@ -66,7 +66,22 @@
       <mat-slide-toggle formControlName="state"></mat-slide-toggle>
     </div>
     
-    <button mat-flat-button color="primary" [disabled]="empForm.invalid" type="submit">Guardar</button>
+    <div>
+      <button mat-flat-button 
+              (click)="back()"
+              color="accent" 
+              type="button">
+        <i class="fas fa-angle-left"></i>
+        Atrás
+      </button>
+      <button *ngIf="viewEmp"
+              mat-flat-button 
+              color="primary" 
+              [disabled]="empForm.invalid" 
+              type="submit">
+        Guardar
+      </button>
+    </div>
   </div>
     
   <div fxFlex="45" class="form-p2">

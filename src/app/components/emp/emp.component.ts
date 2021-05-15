@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router'
 import * as moment from 'moment';
@@ -21,6 +22,7 @@ export class EmpComponent implements OnInit, OnDestroy {
   // Datos para graficar la tabla
   employeesTable = new MatTableDataSource([]);
   displayedColumns: string[] = ["Nombre (cargo)", "Edad", "Fecha contratación", "Acciones"];
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private empService: EmployeesService,
               private fb: FormBuilder,
@@ -34,6 +36,10 @@ export class EmpComponent implements OnInit, OnDestroy {
     this.empSubscription.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.employeesTable.sort = this.sort;
+  }
+
   loadEmployeesData(): void {
     this.empSubscription = this.empService
       .getEmployees()
@@ -42,19 +48,15 @@ export class EmpComponent implements OnInit, OnDestroy {
         const birthDay = moment(emp.birthDay, 'DD/MM/YYYY');
         const dateNow = moment();
         const years = dateNow.diff(birthDay, 'years');
-        console.log('EMP', emp)
-        console.log('AÑOS', years)
 
         return {
-          id: emp.id,
-          username: emp.username,
-          nombre: emp.name,
-          cargo: emp.position,
-          edad: years,
-          fechaContratacion: emp.hiringDate
+          "id": emp.id,
+          "Nombre (cargo)": `${emp.name} (${emp.position})`,
+          "cargo": emp.position,
+          "Edad": years,
+          "Fecha contratación": emp.hiringDate
         }
       });
-      console.log(this.employeesTable.data);
     });
   }
 

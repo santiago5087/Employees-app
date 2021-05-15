@@ -1,24 +1,22 @@
 <div class="container">
-  <table mat-table [dataSource]="employeesTable" class="emp-table">
+  <table mat-table matSort [dataSource]="employeesTable" class="emp-table">
   
     <!-- Nombre (cargo) Column -->
     <ng-container matColumnDef="Nombre (cargo)">
-      <th mat-header-cell *matHeaderCellDef> Nombre (cargo) </th>
-      <td mat-cell *matCellDef="let emp">
-        {{ emp.nombre }} <br> ({{ emp.cargo }}) 
-      </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre (cargo) </th>
+      <td mat-cell *matCellDef="let emp">{{ emp['Nombre (cargo)'] }}</td>
     </ng-container>
   
     <!-- Edad Column -->
     <ng-container matColumnDef="Edad">
-      <th mat-header-cell *matHeaderCellDef> Edad </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.edad }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Edad </th>
+      <td mat-cell *matCellDef="let emp"> {{ emp.Edad }} </td>
     </ng-container>
   
     <!-- Fecha contratación Column -->
     <ng-container matColumnDef="Fecha contratación">
-      <th mat-header-cell *matHeaderCellDef> Fecha contratación </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp['fechaContratacion'] }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha contratación </th>
+      <td mat-cell *matCellDef="let emp"> {{ emp['Fecha contratación'] }} </td>
     </ng-container>
   
     <!-- Acciones Column -->
@@ -45,6 +43,7 @@
   </table>
 
   <button mat-flat-button color="primary" (click)="onSubmitCreate()">
-    + Crear nuevo empleado
+    <i class="fas fa-plus"></i>
+    Crear nuevo empleado
   </button>
 </div>
