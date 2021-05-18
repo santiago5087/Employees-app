@@ -127,7 +127,7 @@ export class EmpFormComponent implements OnInit {
                            "Ok!", this.snackBarConfig);
         console.log(err)
       });
-    } else if(this.editEmp) {
+    } else if(this.createEmp) {
       this.empService.createEmployee(newEmp).then(result => {
         this.snackBar.open('Empleado creado con éxito',
                            "Ok!", this.snackBarConfig);
